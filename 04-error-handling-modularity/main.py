@@ -60,39 +60,3 @@
 #     print(var2)
 #     print('This is the main module.')
 
-# my_lambda = lambda x, y: x + y
-# def my_lambda(x, y):
-#     return x + y
-
-# def a(x):
-#     return x + x
-#
-# def b(x):
-#     return x * x
-#
-# print(id(a))
-# print(id(b))
-# print(id(lambda x: x+x))
-# print(id(lambda x: x*x))
-
-my_dict_list = [
-    {
-        'nume': 'Lenny',
-        'varsta': 34
-    },
-    {
-        'nume': 'Simona Halep',
-        'varsta': 30
-    }
-]
-
-
-def get_key(my_dict):
-    return my_dict.get('varsta')
-
-
-my_dict_list.sort(key=get_key)
-
-my_dict_list.sort(key=lambda d: d.get('varsta'))
-print(my_dict_list)
-sorted(my_dict_list, key=lambda d: d.get('varsta'))
