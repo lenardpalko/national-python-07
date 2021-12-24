@@ -159,7 +159,37 @@
 # multiplier_by_4(4)
 # multiplier_by_5(2)
 
-from functools import partial
-basetwo = partial(int, base=2)
-print(int('100'))
-print(basetwo('100'))
+# from functools import partial
+# basetwo = partial(int, base=2)
+# print(int('100'))
+# print(basetwo('100'))
+
+# import random
+#
+# for _ in range(5):
+#     print(random.random())
+#
+# for _ in range(5):
+#     print(random.randint(1,100))
+#
+#
+# import random
+# outcomes = {
+#     'heads': 0,
+#     'tails': 0,
+# }
+# sides = list(outcomes.keys())
+# for i in range(10000):
+#     outcomes[random.choice(sides)] += 1
+# print('Heads:', outcomes['heads'])
+# print('Tails:', outcomes['tails'])
+
+
+# import requests
+# import textwrap
+# response = requests.get('https://www.google.ro/')
+# print(response.status_code)
+# print('-' * 40)
+# print(response.headers)
+# print('-' * 40)
+# print(textwrap.shorten(response.text, width=250))
