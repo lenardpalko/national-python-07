@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, Http404
-from users.forms import RegisterForm
+from users.forms import RegisterForm, UserImageForm
 from django.contrib.auth import authenticate, login, logout
+from users.email import send_register_mail
 
 # Create your views here.
 def register(request):
@@ -10,7 +11,9 @@ def register(request):
         form = RegisterForm(request.POST)
 
         if form.is_valid():
-            form.save()
+            user = form.save()
+
+            send_register_mail(user)
 
             return redirect('/')
 
@@ -44,3 +47,19 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return redirect('/')
+
+
+def upload_view(request):
+    if request.method == 'GET':
+        form = UserImageForm()
+    else:
+        form = UserImageForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+
+            return render(request, 'users/file_uploaded.html')
+
+    return render(request, 'users/upload.html', {
+        'form': form
+    })

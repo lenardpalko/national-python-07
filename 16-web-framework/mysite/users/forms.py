@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password, password_validators_help_text_html
+from utils.upload import store_uploaded_file
 
 AuthUser = get_user_model()
 
@@ -123,3 +124,11 @@ class RegisterForm(forms.ModelForm):
         self.instance.set_password(password)
 
         return super().save(commit)
+
+
+class UserImageForm(forms.Form):
+    image = forms.ImageField(label='Image to upload', required=True)
+
+    def save(self):
+        image = self.cleaned_data.get('image')
+        store_uploaded_file(image)
