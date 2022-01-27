@@ -1,7 +1,9 @@
-from django.shortcuts import render, redirect, Http404
-from users.forms import RegisterForm, UserImageForm
+from django.shortcuts import render, redirect, Http404, reverse
+from users.forms import RegisterForm, UserImageForm, ProfileImageForm
 from django.contrib.auth import authenticate, login, logout
 from users.email import send_register_mail
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 def register(request):
@@ -39,7 +41,7 @@ def login_user(request):
         else:
             login(request, user)
 
-            return redirect('/')
+            return redirect(reverse('users:profile'))
 
     return render(request, 'users/login.html', {})
 
@@ -61,5 +63,22 @@ def upload_view(request):
             return render(request, 'users/file_uploaded.html')
 
     return render(request, 'users/upload.html', {
+        'form': form
+    })
+
+
+@login_required
+def profile_view(request):
+    if request.method == 'GET':
+        form = ProfileImageForm()
+    else:
+        form = ProfileImageForm(request.POST, request.FILES, instance=request.user.profile)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect(reverse('users:profile'))
+
+    return render(request, 'users/profile.html', {
         'form': form
     })

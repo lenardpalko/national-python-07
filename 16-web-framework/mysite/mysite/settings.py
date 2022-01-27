@@ -150,3 +150,5 @@ EMAIL_HOST_PASSWORD = config('EMAIL_PASS')
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST = 'localhost'
 # EMAIL_PORT = 1025
+
+AUTH_USER_MODEL = 'users.AuthUser'

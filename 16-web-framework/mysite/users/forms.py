@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password, password_validators_help_text_html
 from utils.upload import store_uploaded_file
+from users.models import Profile
 
 AuthUser = get_user_model()
 
@@ -76,7 +77,7 @@ AuthUser = get_user_model()
 class RegisterForm(forms.ModelForm):
     class Meta:
         model = AuthUser
-        fields = ['first_name', 'last_name', 'username']
+        fields = ['first_name', 'last_name', 'email']
 
     password = forms.CharField(
         max_length=255,
@@ -97,13 +98,13 @@ class RegisterForm(forms.ModelForm):
     def clean_password(self):
         first_name = self.cleaned_data.get('first_name')
         last_name = self.cleaned_data.get('last_name')
-        username = self.cleaned_data.get('username')
+        #username = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')
 
         user = AuthUser(
             first_name=first_name,
             last_name=last_name,
-            username=username
+            #username=username
         )
 
         validate_password(password, user=user)
@@ -132,3 +133,9 @@ class UserImageForm(forms.Form):
     def save(self):
         image = self.cleaned_data.get('image')
         store_uploaded_file(image)
+
+
+class ProfileImageForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['avatar']
